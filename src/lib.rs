@@ -8,6 +8,18 @@ fn rotate_left(n: Wrapping<u32>, m: u32) -> Wrapping<u32> {
     Wrapping(n.0.rotate_left(m))
 }
 
+/// Returns the SHA-1 hash of the input
+///
+/// # Arguments
+///
+/// * `input` - A slice of bytes containing the input
+///
+/// # Example
+///
+/// ```
+/// use sha1::sha1;
+/// let hash = sha1(b"The quick brown fox jumps over the lazy dog");
+/// ```
 pub fn sha1(input: &[u8]) -> Vec<u8> {
     // Straightforward implementation of
     // https://en.wikipedia.org/wiki/SHA-1#SHA-1_pseudocode
