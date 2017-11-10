@@ -25,11 +25,11 @@ pub fn sha1(input: &[u8]) -> Vec<u8> {
     // https://en.wikipedia.org/wiki/SHA-1#SHA-1_pseudocode
 
     // Initialize variables
-    let mut h0 = Wrapping(0x67452301u32);
-    let mut h1 = Wrapping(0xEFCDAB89u32);
-    let mut h2 = Wrapping(0x98BADCFEu32);
-    let mut h3 = Wrapping(0x10325476u32);
-    let mut h4 = Wrapping(0xC3D2E1F0u32);
+    let mut h0 = Wrapping(0x67_45_23_01);
+    let mut h1 = Wrapping(0xEF_CD_AB_89);
+    let mut h2 = Wrapping(0x98_BA_DC_FE);
+    let mut h3 = Wrapping(0x10_32_54_76);
+    let mut h4 = Wrapping(0xC3_D2_E1_F0);
 
     let ml = input.len() as u64 * 8;
 
@@ -79,18 +79,18 @@ pub fn sha1(input: &[u8]) -> Vec<u8> {
         let (mut a, mut b, mut c, mut d, mut e) = (h0, h1, h2, h3, h4);
 
         // Main loop
-        for i in 0..80 {
+        for (i, w_i) in w.iter().enumerate() {
             let (f, k) = if i <= 19 {
-                ((b & c) | ((!b) & d), Wrapping(0x5A827999))
+                ((b & c) | ((!b) & d), Wrapping(0x5A_82_79_99))
             } else if 20 <= i && i <= 39 {
-                (b ^ c ^ d, Wrapping(0x6ED9EBA1))
+                (b ^ c ^ d, Wrapping(0x6E_D9_EB_A1))
             } else if 40 <= i && i <= 59 {
-                ((b & c) | (b & d) | (c & d), Wrapping(0x8F1BBCDC))
+                ((b & c) | (b & d) | (c & d), Wrapping(0x8F_1B_BC_DC))
             } else {
-                (b ^ c ^ d, Wrapping(0xCA62C1D6))
+                (b ^ c ^ d, Wrapping(0xCA_62_C1_D6))
             };
 
-            let tmp = rotate_left(a, 5) + f + e + k + w[i];
+            let tmp = rotate_left(a, 5) + f + e + k + w_i;
 
             e = d;
             d = c;
